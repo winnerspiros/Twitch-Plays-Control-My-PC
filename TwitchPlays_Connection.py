@@ -1,6 +1,4 @@
-import socket
-import sys
-import re
+import socket, sys, re
 class Twitch:
     user = "";
     oauth = "";
@@ -13,7 +11,7 @@ class Twitch:
         self.oauth= key;
         print("Connecting to twitch.tv");
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
-        s.settimeout(0.6);
+        s.settimeout(0.9);
         connect_host = "irc.twitch.tv";
         connect_port = 6667;
         try:
@@ -26,7 +24,7 @@ class Twitch:
         s.send(b'USER %s\r\n' % user.encode());
         s.send(b'PASS %s\r\n' % key.encode());
         s.send(b'NICK %s\r\n' % user.encode());
-        if not self.twitch_login_status(s.recv(1024)):
+        if not self.twitch_login_status(s.recv(256)):
             print("... and they didn't accept our details");
             sys.exit();
         else:
@@ -34,7 +32,7 @@ class Twitch:
             print("Connected to twitch.tv!")
             self.s = s;
             s.send(b'JOIN #%s\r\n' % user.encode())
-            s.recv(1024);
+            s.recv(256);
     def check_has_message(self, data):
         return re.match(b'^:[a-zA-Z0-9_]+\![a-zA-Z0-9_]+@[a-zA-Z0-9_]+(\.tmi\.twitch\.tv|\.testserver\.local) PRIVMSG #[a-zA-Z0-9_]+ :.+$', data)
     def parse_message(self, data):
@@ -43,9 +41,9 @@ class Twitch:
             'username': re.findall(b'^:([a-zA-Z0-9_]+)\!', data)[0],
             'message': re.findall(b'PRIVMSG #[a-zA-Z0-9_]+ :(.+)', data)[0].decode('utf_8')
         }
-    def twitch_recieve_messages(self, amount=1024):
+    def twitch_recieve_messages(self, amount=256):
         data = None
-        try: data = self.s.recv(1024);
+        try: data = self.s.recv(256);
         except: return False;
         if not data:
             print("Lost connection to Twitch, attempting to reconnect...");
