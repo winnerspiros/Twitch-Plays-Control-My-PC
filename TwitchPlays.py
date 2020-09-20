@@ -1,20 +1,12 @@
-import time
-import subprocess
-import ctypes
-import random
-import string
-import re
-import sys
-import TwitchPlays_Connection
-import pyautogui
-import pydirectinput
+import time, subprocess, ctypes, random, string, re, sys, os, TwitchPlays_Connection, pyautogui, pydirectinput, pynput
 from TwitchPlays_AccountInfo import TWITCH_USERNAME, TWITCH_OAUTH_TOKEN
-import pynput
 from pynput.mouse import Button, Controller
-text_file = open("executing.txt", "w")
 SendInput = ctypes.windll.user32.SendInput
+reg = re.compile('[^0-9a-z\s]')
+reg2 = re.compile('[WASD\*]\s')
+reg3 = re.compile('[A-Z]')
 def nothing():
-    print (' ')
+    os.system('cls')
 def PressKeyPynput(hexKeyCode):
     extra = ctypes.c_ulong(0)
     ii_ = pynput._util.win32.INPUT_union()
@@ -31,7 +23,6 @@ def PressAndHoldKey(hexKeyCode, seconds):
     PressKeyPynput(hexKeyCode)
     time.sleep(seconds)
     ReleaseKeyPynput(hexKeyCode)
-#DirectX codes are found at:https://docs.microsoft.com/en-us/previous-versions/visualstudio/visual-studio-6.0/aa299374(v=vs.60)
 mouse = Controller()
 Q=0x10
 W=0x11
@@ -115,19 +106,17 @@ Ffour=0x3E
 RIGHT_SHIFT=0x36
 RIGHT_CONTROL=0xA3
 RIGHT_ALT=0xA5
-L_WIN=0x5B
+L_WIN=0x5d
 R_WIN=0x5C
 t = TwitchPlays_Connection.Twitch();
 t.twitch_connect(TWITCH_USERNAME, TWITCH_OAUTH_TOKEN);
-mk= [", "]
-prog=re.compile('(ww|wa|ws|wd|aw|aa|as|ad|sw|ss|sa|sd|dd|da|dw|ds)*$')
 while True:
     new_messages = t.twitch_recieve_messages();
     if not new_messages:
+        nothing()
         continue
     else:
         try:
-            #def read():
                 for message in new_messages:
                     msg = message['message'].lower()
                     msg_preserve_caps = message['message']
@@ -162,7 +151,6 @@ while True:
                 if msg in ['rightclick', 'right click', 'click right', 'right cl', 'rightcl']:
                     obs()
                     mouse.press(Button.right)
-                    time.sleep(0.1)
                     mouse.release(Button.right)
                 if msg in ['hold left click']:
                     obs()
@@ -173,15 +161,14 @@ while True:
                 if msg in ['click', 'cl']:
                     obs()
                     mouse.press(Button.left)
-                    time.sleep(0.1)
                     mouse.release(Button.left)
                 if msg in ['doubleclick', 'double click', 'double cl', 'doublecl']:
                     obs()
                     mouse.press(Button.left)
-                    time.sleep(0.1)
+                    time.sleep(0.04)
                     mouse.release(Button.left)
                     mouse.press(Button.left)
-                    time.sleep(0.1)
+                    time.sleep(0.04)
                     mouse.release(Button.left)
                 if msg in ['tab']:
                     obs()
@@ -198,12 +185,24 @@ while True:
                 if msg in ['where?', 'where']:
                     obs()
                     PressKeyPynput(LEFT_CONTROL)
-                    time.sleep(0.2)
+                    time.sleep(0.004)
                     ReleaseKeyPynput(LEFT_CONTROL)
                 if msg in ['win', 'windows key', 'win key', 'windows']:
                     obs()
-                    PressKeyPynput(L_WIN)
-                    ReleaseKeyPynput(L_WIN)
+                    PressKeyPynput(LEFT_CONTROL)
+                    PressKeyPynput(ESC)
+                    ReleaseKeyPynput(LEFT_CONTROL)
+                    ReleaseKeyPynput(ESC)
+                if msg in ['win s', 'windows s']:
+                    obs()
+                    PressKeyPynput(LEFT_CONTROL)
+                    PressKeyPynput(ESC)
+                    ReleaseKeyPynput(LEFT_CONTROL)
+                    ReleaseKeyPynput(ESC)
+                    time.sleep(0.004)
+                    PressKeyPynput(SPACE)
+                    ReleaseKeyPynput(SPACE)
+                
                 if msg in ['stop all keys', 'stop keys', '!stop', '!end', 'end keys', 'end all keys', 'release key', 'release keys', 'release all keys', 'stop' , 'end']:
                     obs()
                     ReleaseKeyPynput(RIGHT_CONTROL)
@@ -225,34 +224,31 @@ while True:
                 if msg in ['control t', 'ctrl t']:
                     obs()
                     PressKeyPynput(LEFT_CONTROL)
-                    time.sleep(0.1)
+                    time.sleep(0.004)
                     PressKeyPynput(T)
-                    time.sleep(0.1)
                     ReleaseKeyPynput(LEFT_CONTROL)
                     ReleaseKeyPynput(T)
                 if msg in ['control w', 'ctrl w']:
                     obs()
                     PressKeyPynput(LEFT_CONTROL)
-                    time.sleep(0.1)
+                    time.sleep(0.004)
                     PressKeyPynput(W)
-                    time.sleep(0.1)
                     ReleaseKeyPynput(LEFT_CONTROL)
                     ReleaseKeyPynput(W)
                 if msg in ['drag mouse up', 'drag up mouse']:
                     obs()
-                    pyautogui.drag(0, -50, 0.25, button='left')
+                    pydirectinput.drag(0, -50, 0.25, button='left')
                 if msg in ['drag mouse down', 'drag down mouse']:
                     obs()
-                    pyautogui.drag(0, 50, 0.25, button='left')
+                    pydirectinput.drag(0, 50, 0.25, button='left')
                 if msg in ['drag mouse right', 'drag right mouse']:
                     obs()
-                    pyautogui.drag(50, 0, 0.25, button='left')
+                    pydirectinput.drag(50, 0, 0.25, button='left')
                 if msg in ['drag mouse left', 'drag left mouse']:
-                    pyautogui.drag(-50, 0, 0.25, button='left')
+                    pydirectinput.drag(-50, 0, 0.25, button='left')
                 if msg in ['backspace', 'back space']:
                     obs()
                     PressKeyPynput(BACKSPACE)
-                    time.sleep(0.1)
                     ReleaseKeyPynput(BACKSPACE)
                 if msg in ['arrow up', 'up arrow']:
                     obs()
@@ -269,6 +265,13 @@ while True:
                     PressKeyPynput(LEFT_ARROW)
                     time.sleep(1)
                     ReleaseKeyPynput(LEFT_ARROW)
+                if msg in ['alt tab', 'alt-tab']:
+                    obs()
+                    PressKeyPynput(LEFT_ALT)
+                    time.sleep(0.004)
+                    PressKeyPynput(TAB)
+                    ReleaseKeyPynput(LEFT_ALT)
+                    ReleaseKeyPynput(TAB)
                 if msg in ['arrow right', 'right arrow']:
                     obs()
                     PressKeyPynput(RIGHT_ARROW)
@@ -277,7 +280,7 @@ while True:
                 if msg in ['quit', 'exit']:
                     obs()
                     PressKeyPynput(LEFT_ALT)
-                    PressAndHoldKey(Ffour, 0.1)
+                    PressAndHoldKey(Ffour, 0.004)
                     ReleaseKeyPynput(LEFT_ALT)
                 if msg in ['its stuck', 'it is stuck']:
                     obs()
@@ -289,7 +292,7 @@ while True:
                 if msg in ['close tab', 'close the tab']:
                     obs()
                     PressKeyPynput(LEFT_CONTROL)
-                    PressAndHoldKey(W, 0.1)
+                    PressAndHoldKey(W, 0.004)
                     ReleaseKeyPynput(LEFT_CONTROL)
                 if msg in ['hold mouse', 'hold the mouse']:
                     obs()
@@ -322,11 +325,22 @@ while True:
                             PressKeyPynput(LEFT_ALT)
                             PressAndHoldKey(M, 0.1)
                             ReleaseKeyPynput(LEFT_ALT)
-                if msg.startswith("type "): 
+                if msg.startswith('type '): 
                     try:
-                        obs()
                         typeMsg = msg_preserve_caps[5:]
-                        pydirectinput.typewrite(typeMsg)
+                        lengg= len(typeMsg)
+                        if reg3.search(typeMsg) and lengg==1:
+                            obs()
+                            pydirectinput.typewrite(typeMsg.lower())
+                        elif reg2.findall(typeMsg) and lengg!=1:
+                            obs()
+                            pydirectinput.typewrite(typeMsg.lower())
+                        elif reg.search(typeMsg):
+                            obs()
+                            pydirectinput.typewrite(typeMsg)
+                        else:
+                            obs()
+                            pydirectinput.typewrite(typeMsg)
                     except:
                         print("Typing this particular message didn't work: " + msg)
                 if msg.startswith("go to "): 
@@ -342,7 +356,7 @@ while True:
                 if msg in ['select all', 'control all', 'ctrl all', 'ctrl a']:
                         obs()
                         PressKeyPynput(LEFT_CONTROL)
-                        PressAndHoldKey(A, 0.1)
+                        PressAndHoldKey(A, 0.004)
                         ReleaseKeyPynput(LEFT_CONTROL)
                 if msg.startswith('d for '): 
                     try:
@@ -408,12 +422,5 @@ while True:
                             PressAndHoldKey(DOWN_ARROW,timee)
                     except:
                         print('er')
-                if msg in ['test, test2']:
-                    if all([mk in msg for mk in msg]):
-                        i=msg.count(",")
-                    if i == 1:
-                        msg1,msg2 = msg.split(", ")
-                        print(msg1)
-                        print(msg2)
         except:
             print('Encountered an exception while reading chat.')
