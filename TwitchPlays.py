@@ -202,7 +202,6 @@ while True:
                     time.sleep(0.004)
                     PressKeyPynput(SPACE)
                     ReleaseKeyPynput(SPACE)
-                
                 if msg in ['stop all keys', 'stop keys', '!stop', '!end', 'end keys', 'end all keys', 'release key', 'release keys', 'release all keys', 'stop' , 'end']:
                     obs()
                     ReleaseKeyPynput(RIGHT_CONTROL)
