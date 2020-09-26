@@ -236,15 +236,15 @@ while True:
                     ReleaseKeyPynput(W)
                 if msg in ['drag mouse up', 'drag up mouse']:
                     obs()
-                    pydirectinput.drag(0, -50, 0.25, button='left')
+                    pydautogui.drag(0, -50, 0.25, button='left')
                 if msg in ['drag mouse down', 'drag down mouse']:
                     obs()
-                    pydirectinput.drag(0, 50, 0.25, button='left')
+                    pyautogui.drag(0, 50, 0.25, button='left')
                 if msg in ['drag mouse right', 'drag right mouse']:
                     obs()
-                    pydirectinput.drag(50, 0, 0.25, button='left')
+                    pydautogui.drag(50, 0, 0.25, button='left')
                 if msg in ['drag mouse left', 'drag left mouse']:
-                    pydirectinput.drag(-50, 0, 0.25, button='left')
+                    pyautogui.drag(-50, 0, 0.25, button='left')
                 if msg in ['backspace', 'back space']:
                     obs()
                     PressKeyPynput(BACKSPACE)
@@ -303,27 +303,6 @@ while True:
                     mouse.press(Button.left)
                     time.sleep(9)
                     mouse.release(Button.left)
-                if usr == "controlmypc":
-                    if msg == "starting soon":
-                        obs()
-                        PressKeyPynput(LEFT_ALT)
-                        PressAndHoldKey(S, 0.1)
-                        ReleaseKeyPynput(LEFT_ALT)
-                        if msg == "main":
-                            obs()
-                            PressKeyPynput(LEFT_ALT)
-                            PressAndHoldKey(C, 0.1)
-                            ReleaseKeyPynput(LEFT_ALT)
-                        if msg == "stop the stream!":
-                            obs()
-                            PressKeyPynput(LEFT_ALT)
-                            PressAndHoldKey(Q, 0.1)
-                            ReleaseKeyPynput(LEFT_ALT)
-                        if msg == "maintenance":
-                            obs()
-                            PressKeyPynput(LEFT_ALT)
-                            PressAndHoldKey(M, 0.1)
-                            ReleaseKeyPynput(LEFT_ALT)
                 if msg.startswith('type '): 
                     try:
                         typeMsg = msg_preserve_caps[5:]
@@ -362,6 +341,7 @@ while True:
                         timee = msg[6:]
                         timee = float(timee)
                         if timee<=10 and timee>=0:
+                            obs()
                             PressAndHoldKey(D,timee)
                     except:
                         print('error')
@@ -370,6 +350,7 @@ while True:
                         timee = msg[6:]
                         timee = float(timee)
                         if timee<=10 and timee>=0:
+                            obs()
                             PressAndHoldKey(A,timee)
                     except:
                         print('error')
@@ -378,6 +359,7 @@ while True:
                         timee = msg[6:]
                         timee = float(timee)
                         if timee<=10 and timee>=0:
+                            obs()
                             PressAndHoldKey(S,timee)
                     except:
                         print('error')
@@ -386,6 +368,7 @@ while True:
                         timee = msg[6:]
                         timee = float(timee)
                         if timee<=10 and timee>=0:
+                            obs()
                             PressAndHoldKey(W,timee)
                     except:
                         print('error')
@@ -394,6 +377,7 @@ while True:
                         timee = msg[13:]
                         timee = float(timee)
                         if timee<=10 and timee>=0:
+                            obs()
                             PressAndHoldKey(UP_ARROW,timee)
                     except:
                             print('er')   
@@ -402,6 +386,7 @@ while True:
                         timee = msg[15:]
                         timee = float(timee)
                         if timee<=10:
+                            obs()
                             PressAndHoldKey(LEFT_ARROW,timee)
                     except:
                             print('er')    
@@ -410,6 +395,7 @@ while True:
                         timee = msg[16:]
                         timee = float(timee)
                         if timee<=10 and time>=0:
+                            obs()
                             PressAndHoldKey(RIGHT_ARROW,timee)
                     except:
                             print('er')
@@ -418,6 +404,7 @@ while True:
                         timee = msg[15:]
                         timee = float(timee)
                         if timee<=10 and timee>=0:
+                            obs()
                             PressAndHoldKey(DOWN_ARROW,timee)
                     except:
                         print('er')
