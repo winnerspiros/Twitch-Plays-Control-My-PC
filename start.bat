@@ -1,1 +1,1 @@
-forever start -c python twitchplays.py
+forever start -c pypyp3 twitchplays.py
